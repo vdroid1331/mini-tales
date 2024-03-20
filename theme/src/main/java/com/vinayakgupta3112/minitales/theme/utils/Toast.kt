@@ -1,6 +1,5 @@
 package com.vinayakgupta3112.minitales.theme.utils
 
-
 import android.content.Context
 import android.widget.Toast
 import androidx.annotation.StringRes

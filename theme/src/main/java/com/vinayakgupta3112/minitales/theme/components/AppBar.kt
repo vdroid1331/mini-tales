@@ -1,7 +1,5 @@
 package com.vinayakgupta3112.minitales.theme.components
 
-import android.content.res.Configuration
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
@@ -13,19 +11,18 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.tooling.preview.Preview
 import com.vinayakgupta3112.minitales.theme.MiniTalesTheme
 
 @Composable
 fun AppBar(
     title: String,
     navIcon: ImageVector? = null,
-    onNav: () -> Unit = {}
+    onNav: () -> Unit = {},
 ) {
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer,
-            titleContentColor = MaterialTheme.colorScheme.primary
+            titleContentColor = MaterialTheme.colorScheme.primary,
         ),
         title = {
             Text(text = title)
@@ -36,7 +33,7 @@ fun AppBar(
                     Icon(navIcon, contentDescription = "Nav Icon")
                 }
             }
-        }
+        },
     )
 }
 
