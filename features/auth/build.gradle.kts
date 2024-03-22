@@ -1,42 +1,24 @@
-import org.gradle.kotlin.dsl.*
-
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.hilt)
-    alias(libs.plugins.protobuf)
     kotlin("kapt")
 }
 
 android {
-    namespace = "com.vinayakgupta3112.minitales"
+    namespace = "com.vinayakgupta3112.minitales.auth"
 
-    defaultConfig {
-        applicationId = "com.vinayakgupta3112.minitales"
-        versionCode = 1
-        versionName = "1.0"
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
     buildFeatures {
         compose = true
     }
+
 }
 
 dependencies {
     implementation(projects.theme)
-    implementation(projects.features.auth)
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.activity.compose)
 
     implementation(platform(libs.androidx.compose.bom))
@@ -50,13 +32,6 @@ dependencies {
 
     implementation(libs.hilt)
     kapt(libs.hilt.compiler)
-
-    implementation(libs.ktor.client.core)
-
-    implementation(libs.datastore)
-    implementation(libs.protobuf.javalite)
-
-    implementation(libs.timber)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
