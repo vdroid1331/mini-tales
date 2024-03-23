@@ -17,6 +17,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -24,18 +25,29 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.vinayakgupta3112.minitales.auth.R
 import com.vinayakgupta3112.minitales.theme.components.AppTextField
 import com.vinayakgupta3112.minitales.theme.components.MiniTalesPreview
 
 @Composable
-fun LoginScreen() {
-    Login()
+fun LoginScreen(viewModel: LoginViewModel) {
+    val uiState = viewModel.uiState.collectAsStateWithLifecycle()
+
+    Login(
+        uiState = uiState.value,
+        onEvent = {
+            viewModel.onEvent(it)
+        }
+    )
 }
 
 
 @Composable
-fun Login() {
+fun Login(
+    uiState: LoginUIState,
+    onEvent: (LoginUIEvent) -> Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -50,20 +62,25 @@ fun Login() {
             contentDescription = "mini tales"
         )
         AppTextField(
-            value = "vinayakgupta3112@gmail.com",
+            value = uiState.email,
             label = R.string.email,
             hint = "yourname@domain.com",
             leadingIcon = Icons.Filled.Email,
             imeAction = ImeAction.Next,
-            onValueChanged = {}
+            onValueChanged = {
+                onEvent(LoginUIEvent.EmailChanged(it))
+            }
         )
         AppTextField(
-            value = "12345",
+            value = uiState.password,
             label = R.string.password,
             hint = "password",
             leadingIcon = Icons.Filled.Lock,
             imeAction = ImeAction.Done,
-            onValueChanged = {}
+            isPasswordField = true,
+            onValueChanged = {
+                onEvent(LoginUIEvent.PasswordChanged(it))
+            }
         )
         Row(
             modifier = Modifier.fillMaxWidth()
@@ -100,7 +117,7 @@ fun Login() {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 64.dp)
-                .clickable {  },
+                .clickable { },
             text = stringResource(R.string.dont_have_account),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.bodyLarge,
@@ -120,5 +137,5 @@ fun Login() {
 @Composable
 @MiniTalesPreview
 private fun LoginPreview () {
-    Login()
+    Login(uiState = LoginUIState(), onEvent = {})
 }
