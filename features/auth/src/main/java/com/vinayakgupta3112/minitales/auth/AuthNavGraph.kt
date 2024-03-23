@@ -4,6 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.vinayakgupta3112.minitales.auth.login.LoginScreen
 import com.vinayakgupta3112.minitales.auth.splash.SplashScreen
 
 const val authRoot = "auth"
@@ -21,6 +22,10 @@ fun NavGraphBuilder.authNavGraph(
     navigation(startDestination = AuthScreen.Splash.route, route = authRoot) {
         composable(AuthScreen.Splash.route) {
             SplashScreen()
+            navController.navigate(AuthScreen.Login.route)
+        }
+        composable(AuthScreen.Login.route) {
+            LoginScreen()
         }
     }
 }
